@@ -87,7 +87,7 @@ class GottenGeography():
                 except IOError: self.load_gpx_from_file(name)
             except IOError:
                 invalid.append(basename(name))
-        if len(invalid) > 0:
+        if invalid:
             self.status_message(_('Could not open: ') + ', '.join(invalid))
         self.progressbar.hide()
         self.labels.selection.emit('changed')

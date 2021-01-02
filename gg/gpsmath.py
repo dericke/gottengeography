@@ -155,7 +155,8 @@ class Coordinates():
     def pretty_geoname(self):
         """Display city, state, and country, if present."""
         return ', '.join(
-            [s for s in (self.city, self.provincestate, self.countryname) if s])
+            s for s in (self.city, self.provincestate, self.countryname) if s
+        )
     
     def pretty_elevation(self):
         """Convert elevation into a human readable format."""
