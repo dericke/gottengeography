@@ -39,8 +39,8 @@ def move_by_arrow_keys(accel_group, acceleratable, keyval, modifier):
 def remember_location(view):
     """Add current location to history stack."""
     history = list(gst.get('history'))
-    location = tuple([view.get_property(x) for x in
-        ('latitude', 'longitude', 'zoom-level')])
+    location = tuple(view.get_property(x) for x in
+            ('latitude', 'longitude', 'zoom-level'))
     if history[-1] != location:
         history.append(location)
     gst.set_history(history[-30:])

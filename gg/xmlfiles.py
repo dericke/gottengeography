@@ -145,9 +145,7 @@ class GPXFile(TrackFile):
         """Adds a new polygon for each new segment, and watches for track points."""
         if name == 'trkseg':
             self.append = add_polygon_to_map()
-        if name == 'trkpt':
-            return True
-        return False
+        return name == 'trkpt'
     
     def element_end(self, name, state):
         """Collect and use all the parsed data.

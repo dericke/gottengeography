@@ -375,7 +375,7 @@ S 10.00000, W 10.00000
     def test_gps_math(self):
         """Test coordinate conversion functions."""
         rats_to_fracs = lambda rats: [Fraction(rat.to_float()) for rat in rats]
-        
+
         # Really important that this method is bulletproof
         self.assertFalse(valid_coords(None, None))
         self.assertFalse(valid_coords('', ''))
@@ -388,7 +388,7 @@ S 10.00000, W 10.00000
         self.assertFalse(valid_coords(self, 50))
         self.assertFalse(valid_coords(45, valid_coords))
         self.assertFalse(valid_coords("ya", "dun goofed"))
-        
+
         # St. John's broke the math. I'm not sure why.
         # Seriously. Revert commit 362dd6eb and watch this explode.
         stjohns = Coordinates()
@@ -396,10 +396,10 @@ S 10.00000, W 10.00000
         stjohns.longitude = -52.70931
         stjohns.lookup_geoname()
         self.assertEqual(stjohns.city, "St. John's")
-        
+
         # Pick 100 random coordinates on the globe, convert them from decimal
         # to sexagesimal and then back, and ensure that they are always equal.
-        for i in range(100):
+        for _ in range(100):
             # Oh, and test altitudes too
             altitude = round(random_coord(1000), 6)
             fraction = float_to_rational(altitude)
@@ -408,27 +408,27 @@ S 10.00000, W 10.00000
                 fraction.numerator / fraction.denominator,
                 3
             )
-            
+
             decimal_lat = round(random_coord(80),  6)
             decimal_lon = round(random_coord(180), 6)
-            
+
             self.assertTrue(valid_coords(decimal_lat, decimal_lon))
-            
+
             dms_lat = decimal_to_dms(decimal_lat)
             dms_lon = decimal_to_dms(decimal_lon)
-            
+
             self.assertEqual(len(dms_lat), 3)
             self.assertEqual(
                 dms_lat[0].numerator,
                 floor(abs(decimal_lat))
             )
-            
+
             self.assertEqual(len(dms_lon), 3)
             self.assertEqual(
                 dms_lon[0].numerator,
                 floor(abs(decimal_lon))
             )
-            
+
             self.assertAlmostEqual(
                 decimal_lat,
                 dms_to_decimal(*rats_to_fracs(dms_lat) + ['N' if decimal_lat >= 0 else 'S']),
